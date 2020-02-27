@@ -10,6 +10,7 @@ import DeliverymanController from './app/controllers/DeliverymanController';
 import OrderController from './app/controllers/OrderController';
 import DeliverymanOrdersController from './app/controllers/DeliverymanOrdersController';
 import FinishDeliveryController from './app/controllers/FinishDeliveryController';
+import DeliveryProblemController from './app/controllers/DeliveryProblemController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -32,6 +33,14 @@ routes.put(
 routes.put(
   '/deliveryman/:deliveryman_id/deliveries/:order_id/finish',
   FinishDeliveryController.update
+);
+
+// Delivery Problems routes
+routes.get('/delivery/:delivery_id/problems', DeliveryProblemController.index);
+routes.post('/delivery/:delivery_id/problems', DeliveryProblemController.store);
+routes.delete(
+  '/problem/:problem_id/cancel-delivery',
+  DeliveryProblemController.delete
 );
 
 // Middleware de autenticação. A partir daqui, todas as rotas precisam de
