@@ -3,6 +3,8 @@ import Order from '../models/Order';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
 
+import Mail from '../../lib/Mail';
+
 class OrderController {
   async store(req, res) {
     const schema = Yup.object().shape({
@@ -19,11 +21,11 @@ class OrderController {
     /**
      * Check if deliveryman_id is an existing deliveryman
      */
-    const isDeliveryMan = await Deliveryman.findOne({
+    const deliveryman = await Deliveryman.findOne({
       where: { id: deliveryman_id },
     });
 
-    if (!isDeliveryMan) {
+    if (!deliveryman) {
       return res
         .status(401)
         .json({ error: 'There isnt a deliveryman with this id' });
@@ -32,13 +34,13 @@ class OrderController {
     /**
      * Check if recipient_id is from a valid recipient
      */
-    const isRecipient = await Recipient.findOne({
+    const recipient = await Recipient.findOne({
       where: {
         id: recipient_id,
       },
     });
 
-    if (!isRecipient) {
+    if (!recipient) {
       return res
         .status(401)
         .json({ error: 'There isnt a recipient with this id' });
@@ -48,16 +50,30 @@ class OrderController {
      * Making the request to database
      */
 
-    try {
-      const order = await Order.create({
-        deliveryman_id,
-        recipient_id,
+    const order = await Order.create({
+      deliveryman_id,
+      recipient_id,
+      product,
+    });
+
+    await Mail.sendMail({
+      to: `${deliveryman.name} <${deliveryman.email}>`,
+      subject: 'Nova encomenda registrada',
+      template: 'order',
+      context: {
+        deliveryman: deliveryman.name,
+        name: recipient.name,
+        street: recipient.street,
+        number: recipient.number,
+        city: recipient.city,
+        state: recipient.state,
+        complement: recipient.complement,
+        zipcode: recipient.cep,
         product,
-      });
-      return res.json(order);
-    } catch (err) {
-      return res.status(400).json({ error: err.messege });
-    }
+      },
+    });
+
+    return res.json(order);
   }
 }
 
