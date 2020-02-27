@@ -44,12 +44,12 @@ class DeliveryProblemController {
         .json({ error: 'Order doesnt exists or its canceled' });
     }
 
-    const deliveryproblem = DeliveryProblem.create({
+    const deliveryproblem = await DeliveryProblem.create({
       delivery_id,
       description,
     });
 
-    return res.json({ ok: true });
+    return res.json(deliveryproblem);
   }
 
   async delete(req, res) {
