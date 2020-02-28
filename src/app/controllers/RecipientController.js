@@ -3,7 +3,7 @@ import Recipient from '../models/Recipient';
 
 class RecipientController {
   async index(req, res) {
-    const recipients = await Recipient.findAll();
+    const recipients = await Recipient.finddAll();
 
     return res.json(recipients);
   }
