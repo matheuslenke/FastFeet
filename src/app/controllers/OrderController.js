@@ -3,6 +3,9 @@ import Order from '../models/Order';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
 
+import OrderMail from '../jobs/OrderMail';
+import Queue from '../../lib/Queue';
+
 import Mail from '../../lib/Mail';
 
 class OrderController {
@@ -56,21 +59,10 @@ class OrderController {
       product,
     });
 
-    await Mail.sendMail({
-      to: `${deliveryman.name} <${deliveryman.email}>`,
-      subject: 'Nova encomenda registrada',
-      template: 'order',
-      context: {
-        deliveryman: deliveryman.name,
-        name: recipient.name,
-        street: recipient.street,
-        number: recipient.number,
-        city: recipient.city,
-        state: recipient.state,
-        complement: recipient.complement,
-        zipcode: recipient.cep,
-        product,
-      },
+    await Queue.add(OrderMail.key, {
+      deliveryman,
+      recipient,
+      product,
     });
 
     return res.json(order);

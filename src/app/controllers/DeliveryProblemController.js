@@ -1,6 +1,11 @@
 import * as Yup from 'yup';
 import Order from '../models/Order';
+import Recipient from '../models/Recipient';
+import Deliveryman from '../models/Deliveryman';
 import DeliveryProblem from '../models/DeliveryProblem';
+
+import CancelationMail from '../jobs/CancelationMail';
+import Queue from '../../lib/Queue';
 
 class DeliveryProblemController {
   async index(req, res) {
@@ -68,10 +73,39 @@ class DeliveryProblemController {
       where: {
         id: deliveryproblem.delivery_id,
       },
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'complement',
+            'state',
+            'city',
+            'cep',
+            'created_at',
+          ],
+        },
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['name', 'email'],
+        },
+      ],
     });
 
     await order.update({
       canceled_at: new Date(),
+    });
+
+    await Queue.add(CancelationMail.key, {
+      deliveryman: order.deliveryman,
+      recipient: order.recipient,
+      product: order.product,
+      problem: deliveryproblem.description,
     });
 
     return res.json({ ok: true });
