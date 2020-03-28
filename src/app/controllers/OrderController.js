@@ -1,7 +1,9 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 import Order from '../models/Order';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
+import File from '../models/File';
 
 import OrderMail from '../jobs/OrderMail';
 import Queue from '../../lib/Queue';
@@ -9,6 +11,52 @@ import Queue from '../../lib/Queue';
 import Mail from '../../lib/Mail';
 
 class OrderController {
+  async index(req, res) {
+    const { q = '' } = req.query;
+
+    const orders = await Order.findAll({
+      where: {
+        product: {
+          [Op.iLike]: `%${q}%`,
+        },
+        end_date: null,
+        canceled_at: null,
+      },
+      attributes: ['product', 'id'],
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'complement',
+            'state',
+            'city',
+            'cep',
+            'created_at',
+          ],
+        },
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['name', 'email'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'name', 'path', 'url'],
+            },
+          ],
+        },
+      ],
+    });
+
+    return res.json(orders);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       deliveryman_id: Yup.number().required(),

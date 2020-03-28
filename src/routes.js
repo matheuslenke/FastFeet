@@ -62,5 +62,6 @@ routes.delete('/deliverymans/:id', DeliverymanController.delete);
 
 // Order Routes
 routes.post('/orders', OrderController.store);
+routes.get('/orders', OrderController.index);
 
 module.exports = routes;
