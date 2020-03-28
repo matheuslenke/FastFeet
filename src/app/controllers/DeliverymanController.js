@@ -1,11 +1,18 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
+
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 
 class DeliverymanController {
   async index(req, res) {
+    const { q = '' } = req.query;
+
     try {
       const deliverymans = await Deliveryman.findAll({
+        where: {
+          name: { [Op.iLike]: `%${q}%` },
+        },
         attributes: ['id', 'name', 'email'],
         include: [
           {
@@ -17,7 +24,7 @@ class DeliverymanController {
       });
       return res.json(deliverymans);
     } catch (err) {
-      return res.status(400).json({ error: err.messege });
+      return res.status(400).json({ error: 'Erro ao listar entregadores' });
     }
   }
 
