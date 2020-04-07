@@ -13,14 +13,13 @@ export default function RouteWrapper({
   ...rest
 }) {
   const { signed } = store.getState().auth;
-  console.tron.log(signed);
 
   if (!signed && isPrivate) {
     return <Redirect to="/" />;
   }
 
   if (signed && !isPrivate) {
-    return <Redirect to="/orders" />;
+    return <Redirect to="/dashboard" />;
   }
 
   const Layout = signed ? DefaultLayout : AuthLayout;
@@ -30,7 +29,7 @@ export default function RouteWrapper({
       {...rest}
       render={(props) => (
         <Layout>
-          <Component {...props} />
+          <Component />
         </Layout>
       )}
     />
