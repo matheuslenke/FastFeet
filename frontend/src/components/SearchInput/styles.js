@@ -8,8 +8,7 @@ export const Container = styled.div`
   width: 250px;
   padding: 0 16px;
   border-radius: 4px;
-  border: 1px;
-  border-color: #ddd;
+  border: 1px solid #ddd;
 
   svg {
     margin-right: 8px;
