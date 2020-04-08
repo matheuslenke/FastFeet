@@ -39,4 +39,10 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  footer {
+    height: 0;
+    margin: 0;
+    padding: 0;
+  }
 `;
