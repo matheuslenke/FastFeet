@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Container, Content, OrdersTable } from './styles';
 
 import SearchInput from '~/components/SearchInput';
+import RegisterButton from '~/components/Buttons/RegisterButton';
 
 import OrdersItem from './OrdersItem';
 
@@ -14,7 +15,7 @@ export default function Orders() {
           <h1>Gerenciando encomendas</h1>
           <div>
             <SearchInput placeholder=" Pesquisar por encomendas" />
-            <button type="button">Cadastrar</button>
+            <RegisterButton type="button">Cadastrar</RegisterButton>
           </div>
         </header>
 
@@ -32,6 +33,7 @@ export default function Orders() {
           </thead>
           <tbody>
             <OrdersItem />
+
             <OrdersItem />
           </tbody>
         </OrdersTable>
