@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { darken } from 'polished';
 
 export const Container = styled.div`
@@ -9,7 +8,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   height: 64px;
-  max-width: 900px;
+  max-width: 1800px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -50,8 +49,6 @@ export const Navigation = styled.div`
     }
   }
 `;
-
-export const ActiveLink = styled.a``;
 
 export const Profile = styled.div`
   display: flex;
