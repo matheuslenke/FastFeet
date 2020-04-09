@@ -22,7 +22,7 @@ class OrderController {
         end_date: null,
         canceled_at: null,
       },
-      attributes: ['product', 'id'],
+      attributes: ['product', 'id', 'start_date', 'canceled_at', 'end_date'],
       include: [
         {
           model: Recipient,
