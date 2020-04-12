@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { Form } from '@unform/web';
 
-export const FormSection = styled.form`
+export const FormSection = styled(Form)`
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -22,22 +23,6 @@ export const InputDiv = styled.div`
 export const InputLabel = styled.span`
   font-weight: bold;
   margin: 0 10px;
-`;
-
-export const Input = styled.input`
-  border: 1px solid #ddd;
-  margin: 10px;
-  padding: 0 10px;
-  height: 45px;
-  border-radius: 4px;
-`;
-
-export const Select = styled.select`
-  border: 1px solid #ddd;
-  margin: 10px;
-  height: 45px;
-  background: #fff;
-  color: #999;
 `;
 
 export const Option = styled.option``;
