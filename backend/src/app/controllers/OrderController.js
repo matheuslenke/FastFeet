@@ -9,6 +9,22 @@ import OrderMail from '../jobs/OrderMail';
 import Queue from '../../lib/Queue';
 
 class OrderController {
+  async show(req, res) {
+    const { orderId } = req.params;
+
+    if (!orderId) {
+      return res.status(400).json({ error: 'Not a valid id' });
+    }
+
+    const order = await Order.findByPk(orderId);
+
+    if (!order) {
+      return res.status(400).json({ error: 'No order with that id' });
+    }
+
+    return res.json(order);
+  }
+
   async index(req, res) {
     const { page = 1, q = '' } = req.query;
 
@@ -43,7 +59,7 @@ class OrderController {
         {
           model: Deliveryman,
           as: 'deliveryman',
-          attributes: ['name', 'email'],
+          attributes: ['id', 'name', 'email'],
           include: [
             {
               model: File,
@@ -120,6 +136,24 @@ class OrderController {
     });
 
     return res.json(order);
+  }
+
+  async update(req, res) {
+    const { orderId } = req.params;
+
+    if (!orderId) {
+      return res.status(400).json({ error: 'Not a valid id' });
+    }
+
+    const order = await Order.findByPk(orderId);
+
+    if (!order) {
+      return res.status(400).json({ error: 'No order with that id' });
+    }
+
+    await order.update(req.body);
+
+    return res.json({ ok: true });
   }
 }
 
