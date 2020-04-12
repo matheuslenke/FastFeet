@@ -8,21 +8,22 @@ import File from '../models/File';
 import OrderMail from '../jobs/OrderMail';
 import Queue from '../../lib/Queue';
 
-import Mail from '../../lib/Mail';
-
 class OrderController {
   async index(req, res) {
-    const { q = '' } = req.query;
+    const { page = 1, q = '' } = req.query;
 
+    if (page == 0) {
+      return res.status(400).json({ error: 'Not a valid page' });
+    }
     const orders = await Order.findAll({
       where: {
         product: {
           [Op.iLike]: `%${q}%`,
         },
-        end_date: null,
-        canceled_at: null,
       },
       attributes: ['product', 'id', 'start_date', 'canceled_at', 'end_date'],
+      limit: 5,
+      offset: (page - 1) * 5,
       include: [
         {
           model: Recipient,
@@ -50,6 +51,11 @@ class OrderController {
               attributes: ['id', 'name', 'path', 'url'],
             },
           ],
+        },
+        {
+          model: File,
+          as: 'signature',
+          attribures: ['id', 'name', 'path', 'url'],
         },
       ],
     });
