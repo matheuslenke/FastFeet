@@ -44,3 +44,27 @@ export const OrdersTable = styled.table`
   tbody {
   }
 `;
+
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    border: none;
+    background: #7d40e7;
+    padding: 5px;
+    border-radius: 4px;
+
+    &:disabled {
+      background: #999;
+      cursor: default;
+    }
+  }
+
+  span {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 20px;
+  }
+`;

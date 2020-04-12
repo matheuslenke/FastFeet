@@ -27,9 +27,16 @@ export const DeliverymanDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
 `;
 
-export const Avatar = styled.div`
+export const AvatarDefault = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,7 +50,7 @@ export const Avatar = styled.div`
 
 export const StatusTag = styled.object.attrs((props) => ({
   color: props.color,
-  backgroundcolor: lighten(0.4, props.color),
+  backgroundcolor: lighten(0.33, props.color),
 }))`
   color: ${(props) => props.color};
   background-color: ${(props) => props.backgroundcolor};

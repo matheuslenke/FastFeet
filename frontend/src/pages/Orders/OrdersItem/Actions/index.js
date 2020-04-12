@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { MdVisibility, MdCreate, MdDelete } from 'react-icons/md';
-import {
-  Container,
-  ActionsButton,
-  ActionsList,
-  Visualize,
-  Edit,
-  Delete,
-} from './styles';
+import { Container, ActionsList, Visualize, Edit, Delete } from './styles';
 
-export default function Actions({ handleVisibleModal }) {
+import history from '~/services/history';
+
+export default function Actions({ handleVisibleModal, order }) {
   const [visible, setVisible] = useState(false);
 
   function handleToggleVisible() {
@@ -18,18 +14,24 @@ export default function Actions({ handleVisibleModal }) {
 
   return (
     <Container>
-      <ActionsButton type="button" onClick={handleToggleVisible}>
-        ...
-      </ActionsButton>
-      <ActionsList visible={visible}>
+      <ActionsList>
         <Visualize onClick={handleVisibleModal}>
           <MdVisibility color="#8E5BE8" size={16} />
           <span>Visualizar</span>
         </Visualize>
-        <Edit>
-          <MdCreate color="#4D85EE" size={16} />
-          <span>Editar</span>
-        </Edit>
+        <Link
+          to={{
+            pathname: '/orders/edit',
+            state: {
+              order,
+            },
+          }}
+        >
+          <Edit>
+            <MdCreate color="#4D85EE" size={16} />
+            <span>Editar</span>
+          </Edit>
+        </Link>
         <Delete>
           <MdDelete color="#DE3B3B" size={16} />
           <span>Excluir</span>

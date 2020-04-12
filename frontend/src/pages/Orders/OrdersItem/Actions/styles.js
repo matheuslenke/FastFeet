@@ -4,13 +4,6 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const ActionsButton = styled.button`
-  background: none;
-  border: 0;
-  position: relative;
-  z-index: 1;
-`;
-
 export const ActionsList = styled.div`
   position: absolute;
   z-index: 2;
@@ -18,11 +11,10 @@ export const ActionsList = styled.div`
   left: calc(50% - 60px);
   top: calc(100% + 10px);
   background: rgba(255, 255, 255, 1);
-
+  display: flex;
   border-radius: 4px;
   flex-direction: column;
   padding: 10px 10px;
-  display: ${(props) => (props.visible ? 'flex' : 'none')};
   filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.4));
 
   &::before {
