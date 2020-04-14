@@ -51,7 +51,7 @@ export default function OrdersForm() {
   async function loadRecipients(InputValue) {
     const response = await api.get('/recipients', {
       params: {
-        q: InputValue,
+        name: InputValue,
       },
     });
     if (response) {
@@ -69,7 +69,7 @@ export default function OrdersForm() {
   async function loadDeliverymans(InputValue) {
     const response = await api.get('/deliverymans', {
       params: {
-        q: InputValue,
+        name: InputValue,
       },
     });
 

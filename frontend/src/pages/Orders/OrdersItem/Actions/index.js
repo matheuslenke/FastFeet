@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import { MdVisibility, MdCreate, MdDelete } from 'react-icons/md';
 import { Container, ActionsList, Visualize, Edit, Delete } from './styles';
 
 import history from '~/services/history';
 
-export default function Actions({ handleVisibleModal, order }) {
+export default function Actions({ handleVisibleModal, order, handleDelete }) {
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
 
   function handleToggleVisible() {
@@ -32,7 +35,7 @@ export default function Actions({ handleVisibleModal, order }) {
             <span>Editar</span>
           </Edit>
         </Link>
-        <Delete>
+        <Delete onClick={() => handleDelete(order.id)}>
           <MdDelete color="#DE3B3B" size={16} />
           <span>Excluir</span>
         </Delete>

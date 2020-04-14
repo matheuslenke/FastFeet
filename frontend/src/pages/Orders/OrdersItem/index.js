@@ -15,7 +15,7 @@ import PopUp from '~/components/PopUp';
 
 import colors from '~/styles/colors';
 
-export default function OrdersItem({ order }) {
+export default function OrdersItem({ order, handleDelete }) {
   const [visibleModal, setVisibleModal] = useState(false);
   const [statusColor, setStatusColor] = useState('#fff');
   const [statusText, setStatusText] = useState('');
@@ -44,14 +44,17 @@ export default function OrdersItem({ order }) {
     if (order.canceled_at !== null) {
       setStatusColor(colors.status.canceled);
       setStatusText('CANCELADO');
-    }
-    if (order.start_date === null) {
-      setStatusColor(colors.status.pending);
-      setStatusText('PENDENTE');
+      return;
     }
     if (order.end_date !== null) {
       setStatusColor(colors.status.delivered);
       setStatusText('ENTREGUE');
+      return;
+    }
+    if (order.start_date === null) {
+      setStatusColor(colors.status.pending);
+      setStatusText('PENDENTE');
+      return;
     }
     if (order.start_date !== null) {
       setStatusColor(colors.status.withdrawal);
@@ -88,7 +91,11 @@ export default function OrdersItem({ order }) {
       </td>
       <td>
         <PopUp>
-          <Actions order={order} handleVisibleModal={handleVisibleModal} />
+          <Actions
+            handleDelete={handleDelete}
+            order={order}
+            handleVisibleModal={handleVisibleModal}
+          />
         </PopUp>
       </td>
       <Modal visible={visibleModal} handleClose={handleVisibleModal}>

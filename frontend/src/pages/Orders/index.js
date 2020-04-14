@@ -13,7 +13,10 @@ import OrdersItem from './OrdersItem';
 import api from '~/services/api';
 import history from '~/services/history';
 
-import { getOrdersRequest } from '~/store/modules/orders/actions';
+import {
+  getOrdersRequest,
+  deleteOrdersRequest,
+} from '~/store/modules/orders/actions';
 
 export default function Orders() {
   const [page, setPage] = useState(1);
@@ -25,12 +28,11 @@ export default function Orders() {
   const { orders } = useSelector((state) => state.orders);
 
   useEffect(() => {
-    console.tron.log(searchName);
     async function loadOrders() {
       dispatch(getOrdersRequest(page, searchName));
     }
     loadOrders();
-  }, [dispatch, page, searchName]);
+  }, [page, searchName]);
 
   useEffect(() => {
     if (orders.length < 5) {
@@ -40,6 +42,11 @@ export default function Orders() {
       setEndOfPages(false);
     }
   }, [page, orders]);
+
+  function handleDelete(orderId) {
+    dispatch(deleteOrdersRequest(orderId));
+    dispatch(getOrdersRequest(page, searchName));
+  }
 
   function handlePageBack() {
     if (page === 1) {
@@ -83,7 +90,11 @@ export default function Orders() {
           </thead>
           <tbody>
             {orders.map((order) => (
-              <OrdersItem order={order} key={order.id} />
+              <OrdersItem
+                order={order}
+                key={order.id}
+                handleDelete={handleDelete}
+              />
             ))}
           </tbody>
         </OrdersTable>
