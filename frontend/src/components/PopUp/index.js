@@ -14,7 +14,8 @@ export default function PopUp({ children }) {
       )}
       position="bottom center"
       contentStyle={{
-        width: '150px',
+        width: 'auto',
+        minWidth: '150px',
         border: 'none',
         background: 'transparent',
         style: 'none',

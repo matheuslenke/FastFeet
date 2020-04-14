@@ -22,7 +22,7 @@ export const Content = styled.div`
       padding-bottom: 30px;
     }
 
-    > div {
+    div {
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -32,7 +32,7 @@ export const Content = styled.div`
   }
 `;
 
-export const DeliverymanTable = styled.table`
+export const ProblemsTable = styled.table`
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 20px;
@@ -64,7 +64,6 @@ export const Pagination = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   button {
     border: none;
     background: #7d40e7;

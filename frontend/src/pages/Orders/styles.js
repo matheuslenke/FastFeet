@@ -39,9 +39,24 @@ export const OrdersTable = styled.table`
 
   thead {
     border-bottom: 30px solid transparent;
+    text-align: left;
+    tr {
+      th {
+        padding: 0 20px;
+      }
+      th:last-child {
+        text-align: right;
+      }
+    }
   }
 
   tbody {
+    td {
+      text-align: left;
+    }
+    td:last-child {
+      text-align: right;
+    }
   }
 `;
 

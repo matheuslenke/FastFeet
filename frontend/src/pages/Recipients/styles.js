@@ -32,15 +32,15 @@ export const Content = styled.div`
   }
 `;
 
-export const DeliverymanTable = styled.table`
+export const RecipientsTable = styled.table`
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 20px;
 
   thead {
     border-bottom: 30px solid transparent;
-    text-align: left;
     tr {
+      text-align: left;
       th {
         padding: 0 20px;
       }

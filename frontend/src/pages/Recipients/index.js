@@ -4,13 +4,16 @@ import { Link } from 'react-router-dom';
 
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import { toast } from 'react-toastify';
-import { Container, Content, DeliverymanTable, Pagination } from './styles';
+import { Container, Content, RecipientsTable, Pagination } from './styles';
 
 import SearchInput from '~/components/SearchInput';
 import RegisterButton from '~/components/Buttons/RegisterButton';
-import DeliverymansItem from './DeliverymansItem';
+import RecipientsItem from './RecipientsItem';
 
-import { getDeliverymansRequest } from '~/store/modules/deliverymans/actions';
+import {
+  getRecipientsRequest,
+  deleteRecipientsRequest,
+} from '~/store/modules/recipients/actions';
 import api from '~/services/api';
 
 export default function Orders() {
@@ -19,35 +22,35 @@ export default function Orders() {
   const [page, setPage] = useState(1);
   const [endOfPages, setEndOfPages] = useState(false);
 
-  const loading = useSelector((state) => state.deliverymans.loading);
-  const { deliverymans } = useSelector((state) => state.deliverymans);
-  const deliverymansCount = useSelector((state) => state.count);
+  const loading = useSelector((state) => state.recipients.loading);
+  const { recipients } = useSelector((state) => state.recipients);
+  const recipientsCount = useSelector((state) => state.recipients.count);
 
   useEffect(() => {
-    dispatch(getDeliverymansRequest(page, searchName));
+    dispatch(getRecipientsRequest(page, searchName));
   }, [page, searchName]);
 
-  async function handleDelete(deliveryman_id) {
+  async function handleDelete(recipient_id) {
     try {
-      if (window.confirm('Tem certeza que deseja deletar este entregador?')) {
-        await api.delete(`deliverymans/${deliveryman_id}`);
+      if (window.confirm('Tem certeza que deseja deletar este destinatário?')) {
+        await api.delete(`recipients/${recipient_id}`);
 
-        toast.success('Entregador deletado com sucesso!');
-        dispatch(getDeliverymansRequest(page, searchName));
+        dispatch(getRecipientsRequest(page, searchName));
+        toast.success('Destinatário deletado com sucesso');
       }
     } catch (error) {
-      toast.error('Erro ao deletar entregador, tente novamente');
+      toast.error('Falha ao deletar destinatário');
     }
   }
 
   useEffect(() => {
-    if (deliverymans.length < 6) {
+    if (recipients.length < 6) {
       setEndOfPages(true);
     }
-    if (page * 6 < deliverymansCount) {
+    if (page * 6 < recipientsCount) {
       setEndOfPages(false);
     }
-  }, [page, deliverymans]);
+  }, [page, recipients]);
 
   function handlePageBack() {
     if (page === 1) {
@@ -63,39 +66,37 @@ export default function Orders() {
     <Container>
       <Content>
         <header>
-          <h1>Gerenciando Entregadores</h1>
+          <h1>Gerenciando Destinatários</h1>
           <div>
             <SearchInput
               type="text"
               value={searchName}
-              placeholder=" Pesquisar por entregadores"
+              placeholder="Pesquisar por destinatários"
               onChange={(e) => setSearchName(e.target.value)}
             />
-            <Link to="/deliverymans/new">
+            <Link to="/recipients/new">
               <RegisterButton type="button">Cadastrar</RegisterButton>
             </Link>
           </div>
         </header>
 
-        <DeliverymanTable>
+        <RecipientsTable>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Foto</th>
-              <th>Nome</th>
-              <th>Email</th>
+              <th>Endereço</th>
               <th>Ações</th>
             </tr>
           </thead>
           <tbody>
-            {deliverymans.map((deliveryman) => (
-              <DeliverymansItem
-                deliveryman={deliveryman}
+            {recipients.map((recipient) => (
+              <RecipientsItem
+                recipient={recipient}
                 handleDelete={handleDelete}
               />
             ))}
           </tbody>
-        </DeliverymanTable>
+        </RecipientsTable>
         <Pagination>
           <button disabled={page <= 1} type="button" onClick={handlePageBack}>
             <MdArrowBack size={16} color="#fff" />

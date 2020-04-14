@@ -4,7 +4,7 @@ import pt from 'date-fns/locale/pt';
 
 import {
   OrderItem,
-  DeliverymanDiv,
+  OrderDiv,
   AvatarDefault,
   StatusTag,
   ModalInfo,
@@ -47,6 +47,16 @@ export default function OrdersItem({ order, handleDelete }) {
       .join('');
   }, [order.deliveryman.name]);
 
+  const randomColor = useMemo(() => {
+    const rgb = [];
+    for (let i = 0; i < 3; i++) {
+      const r = Math.floor(Math.random() * 256);
+      rgb.push(r);
+    }
+    const stringrgb = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+    return stringrgb;
+  }, [order.deliveryman.avatar]);
+
   useEffect(() => {
     if (order.canceled_at !== null) {
       setStatusColor(colors.status.canceled);
@@ -70,41 +80,43 @@ export default function OrdersItem({ order, handleDelete }) {
   }, [order]);
 
   return (
-    <OrderItem>
-      <td>#{order.id}</td>
-      <td>{order.recipient.name}</td>
-      <td>
-        <DeliverymanDiv>
-          {order.deliveryman.avatar ? (
-            <img
-              src={order.deliveryman.avatar.url}
-              alt={order.deliveryman.name}
+    <>
+      <OrderItem>
+        <td>#{order.id}</td>
+        <td>{order.recipient.name}</td>
+        <td>
+          <OrderDiv>
+            {order.deliveryman.avatar ? (
+              <img
+                src={order.deliveryman.avatar.url}
+                alt={order.deliveryman.name}
+              />
+            ) : (
+              <AvatarDefault color={randomColor}>
+                {' '}
+                <span>{nameInitials}</span>
+              </AvatarDefault>
+            )}
+            <span>{order.deliveryman.name}</span>
+          </OrderDiv>
+        </td>
+        <td>{order.recipient.city}</td>
+        <td>{order.recipient.state}</td>
+        <td>
+          <StatusTag color={statusColor}>
+            <span>{statusText}</span>
+          </StatusTag>
+        </td>
+        <td>
+          <PopUp>
+            <Actions
+              handleDelete={handleDelete}
+              order={order}
+              handleVisibleModal={handleVisibleModal}
             />
-          ) : (
-            <AvatarDefault>
-              {' '}
-              <span>{nameInitials}</span>
-            </AvatarDefault>
-          )}
-          <span>{order.deliveryman.name}</span>
-        </DeliverymanDiv>
-      </td>
-      <td>{order.recipient.city}</td>
-      <td>{order.recipient.state}</td>
-      <td>
-        <StatusTag color={statusColor}>
-          <span>{statusText}</span>
-        </StatusTag>
-      </td>
-      <td>
-        <PopUp>
-          <Actions
-            handleDelete={handleDelete}
-            order={order}
-            handleVisibleModal={handleVisibleModal}
-          />
-        </PopUp>
-      </td>
+          </PopUp>
+        </td>
+      </OrderItem>
       <Modal visible={visibleModal} handleClose={handleVisibleModal}>
         <ModalInfo>
           <section>
@@ -138,6 +150,6 @@ export default function OrdersItem({ order, handleDelete }) {
           </section>
         </ModalInfo>
       </Modal>
-    </OrderItem>
+    </>
   );
 }

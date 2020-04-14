@@ -15,14 +15,14 @@ import BackButton from '~/components/Buttons/BackButton';
 import SaveButton from '~/components/Buttons/SaveButton';
 import Input from '~/components/Form/FormInput';
 
-import { postDeliverymansRequest } from '~/store/modules/deliverymans/actions';
+import { storeDeliverymansRequest } from '~/store/modules/deliverymans/actions';
 import history from '~/services/history';
 
 export default function DeliverymanForm() {
   const dispatch = useDispatch();
 
   function handleSubmit(data, { reset }) {
-    dispatch(postDeliverymansRequest(data));
+    dispatch(storeDeliverymansRequest(data));
 
     // reset();
   }

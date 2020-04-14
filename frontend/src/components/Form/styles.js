@@ -14,6 +14,7 @@ export const FormRow = styled.div`
 `;
 
 export const InputDiv = styled.div`
+  flex: 1;
   width: 100%;
   display: flex;
   flex-direction: column;

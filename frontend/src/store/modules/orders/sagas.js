@@ -3,7 +3,6 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import api from '~/services/api';
-import history from '~/services/history';
 
 import {
   getOrdersSuccess,
@@ -21,7 +20,7 @@ export function* getOrders({ payload }) {
     const response = yield call(api.get, 'orders', {
       params: {
         page,
-        q: name,
+        name,
       },
     });
 
@@ -70,7 +69,6 @@ export function* updateOrders({ payload }) {
     yield put(updateOrdersSuccess(response.data));
   } catch (error) {
     toast.error('Erro ao atualizar encomenda, tente novamente');
-    console.tron.log(error);
     yield put(updateOrdersFailure());
   }
 }

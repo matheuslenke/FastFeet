@@ -1,22 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { MdVisibility, MdCreate, MdDelete } from 'react-icons/md';
 import { Container, ActionsList, Visualize, Edit, Delete } from './styles';
 
-export default function Actions({ handleVisibleModal, order, handleDelete }) {
+import history from '~/services/history';
+
+export default function Actions({ recipient, handleDelete }) {
   return (
     <Container>
       <ActionsList>
-        <Visualize onClick={handleVisibleModal}>
-          <MdVisibility color="#8E5BE8" size={16} />
-          <span>Visualizar</span>
-        </Visualize>
         <Link
           to={{
-            pathname: '/orders/edit',
+            pathname: '/recipients/edit',
             state: {
-              order,
+              recipient,
             },
           }}
         >
@@ -25,7 +22,7 @@ export default function Actions({ handleVisibleModal, order, handleDelete }) {
             <span>Editar</span>
           </Edit>
         </Link>
-        <Delete onClick={() => handleDelete(order.id)}>
+        <Delete onClick={() => handleDelete(recipient.id)}>
           <MdDelete color="#DE3B3B" size={16} />
           <span>Excluir</span>
         </Delete>

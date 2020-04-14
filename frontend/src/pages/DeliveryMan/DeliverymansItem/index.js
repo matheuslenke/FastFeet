@@ -22,8 +22,19 @@ export default function DeliverymansItem({ deliveryman, handleDelete }) {
     return deliveryman.name
       .split(' ')
       .map((n) => n[0])
-      .join('');
+      .join('')
+      .toUpperCase();
   }, [deliveryman.name]);
+
+  const randomColor = useMemo(() => {
+    const rgb = [];
+    for (let i = 0; i < 3; i++) {
+      const r = Math.floor(Math.random() * 256);
+      rgb.push(r);
+    }
+    const stringrgb = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+    return stringrgb;
+  }, [deliveryman.avatar]);
 
   return (
     <DeliverymanItem>
@@ -33,7 +44,7 @@ export default function DeliverymansItem({ deliveryman, handleDelete }) {
           {deliveryman.avatar ? (
             <img src={deliveryman.avatar.url} alt={deliveryman.name} />
           ) : (
-            <AvatarDefault>
+            <AvatarDefault color={randomColor}>
               {' '}
               <span>{nameInitials}</span>
             </AvatarDefault>

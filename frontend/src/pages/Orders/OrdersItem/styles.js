@@ -9,7 +9,7 @@ export const OrderItem = styled.tr`
   border-top: 20px solid transparent;
 
   td {
-    padding: 20px 5px;
+    padding: 20px;
     background: #fff;
 
     &:first-child {
@@ -23,10 +23,10 @@ export const OrderItem = styled.tr`
   }
 `;
 
-export const DeliverymanDiv = styled.div`
+export const OrderDiv = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
   img {
     width: 35px;
@@ -36,19 +36,23 @@ export const DeliverymanDiv = styled.div`
   }
 `;
 
-export const AvatarDefault = styled.div`
+export const AvatarDefault = styled.div.attrs((props) => ({
+  color: props.randomColor,
+  backgroundcolor: lighten(0.2, props.color),
+}))`
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
   width: 35px;
   height: 35px;
-  background: #ddd;
+  background: ${(props) => `${props.backgroundcolor}`};
   color: #fff;
   margin-right: 5px;
 
   span {
-    color: #333;
+    text-shadow: 1px 1px 3px #111;
+    color: ${(props) => `${props.color}`};
   }
 `;
 

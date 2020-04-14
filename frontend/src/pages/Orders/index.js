@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
+import { toast } from 'react-toastify';
 import { Container, Content, OrdersTable, Pagination } from './styles';
 
 import SearchInput from '~/components/SearchInput';
@@ -11,12 +12,8 @@ import RegisterButton from '~/components/Buttons/RegisterButton';
 import OrdersItem from './OrdersItem';
 
 import api from '~/services/api';
-import history from '~/services/history';
 
-import {
-  getOrdersRequest,
-  deleteOrdersRequest,
-} from '~/store/modules/orders/actions';
+import { getOrdersRequest } from '~/store/modules/orders/actions';
 
 export default function Orders() {
   const [page, setPage] = useState(1);
@@ -25,6 +22,7 @@ export default function Orders() {
 
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
+  const ordersCount = useSelector((state) => state.ordersCount);
 
   useEffect(() => {
     async function loadOrders() {
@@ -34,17 +32,24 @@ export default function Orders() {
   }, [page, searchName]);
 
   useEffect(() => {
-    if (orders.length < 5) {
+    if (page * 6 >= ordersCount) {
       setEndOfPages(true);
-    }
-    if (orders.length == 5) {
+    } else {
       setEndOfPages(false);
     }
   }, [page, orders]);
 
-  function handleDelete(orderId) {
-    dispatch(deleteOrdersRequest(orderId));
-    dispatch(getOrdersRequest(page, searchName));
+  async function handleDelete(orderId) {
+    try {
+      if (window.confirm('Tem certeza que deseja deletar esta encomenda?')) {
+        await api.delete(`orders/${orderId}`);
+
+        toast.success('Encomenda deletada com sucesso!');
+        dispatch(getOrdersRequest(page, searchName));
+      }
+    } catch (error) {
+      toast.error('Erro ao deletar encomenda, tente novamente');
+    }
   }
 
   function handlePageBack() {
