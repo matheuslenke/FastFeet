@@ -5,12 +5,14 @@ import Recipient from '../models/Recipient';
 
 class RecipientController {
   async index(req, res) {
-    const { q = '' } = req.query;
+    const { page = 1, name = '' } = req.query;
 
-    const recipients = await Recipient.findAll({
+    const recipients = await Recipient.findAndCountAll({
       where: {
-        name: { [Op.iLike]: `%${q}%` },
+        name: { [Op.iLike]: `%${name}%` },
       },
+      limit: 6,
+      offset: (page - 1) * 6,
     });
 
     return res.json(recipients);
@@ -58,6 +60,24 @@ class RecipientController {
 
     await recipient.update(req.body);
     return res.json(recipient);
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const recipient = await Recipient.findByPk(id);
+
+    if (!recipient) {
+      return res.status(400).json({ error: 'Recipient not found' });
+    }
+
+    await recipient.destroy({
+      where: {
+        id,
+      },
+    });
+
+    return res.json({ ok: true });
   }
 }
 

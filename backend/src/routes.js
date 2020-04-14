@@ -36,12 +36,8 @@ routes.put(
 );
 
 // Delivery Problems routes
-routes.get('/delivery/:delivery_id/problems', DeliveryProblemController.index);
+routes.get('/delivery/:delivery_id/problems', DeliveryProblemController.show);
 routes.post('/delivery/:delivery_id/problems', DeliveryProblemController.store);
-routes.delete(
-  '/problem/:problem_id/cancel-delivery',
-  DeliveryProblemController.delete
-);
 
 // Middleware de autenticação. A partir daqui, todas as rotas precisam de
 // autenticação.
@@ -51,13 +47,14 @@ routes.use(authMiddleware);
 routes.post('/recipients', RecipientController.store);
 routes.get('/recipients', RecipientController.index);
 routes.put('/recipients/:id', RecipientController.update);
+routes.delete('/recipients/:id', RecipientController.delete);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
 // Deliveryman Routes
 routes.post('/deliverymans', DeliverymanController.store);
 routes.get('/deliverymans', DeliverymanController.index);
-routes.put('/deliverymans', DeliverymanController.update);
+routes.put('/deliverymans/:id', DeliverymanController.update);
 routes.delete('/deliverymans/:id', DeliverymanController.delete);
 
 // Order Routes
@@ -65,5 +62,13 @@ routes.post('/orders', OrderController.store);
 routes.put('/orders/:orderId', OrderController.update);
 routes.get('/orders', OrderController.index);
 routes.get('/orders/:orderId', OrderController.show);
+routes.delete('/orders/:orderId', OrderController.delete);
+
+// Problems routes
+routes.get('/delivery/problems', DeliveryProblemController.index);
+routes.delete(
+  '/problem/:problem_id/cancel-delivery',
+  DeliveryProblemController.delete
+);
 
 module.exports = routes;

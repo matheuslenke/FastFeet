@@ -1,4 +1,6 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
+
 import Order from '../models/Order';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
@@ -9,9 +11,39 @@ import Queue from '../../lib/Queue';
 
 class DeliveryProblemController {
   async index(req, res) {
+    const { page = 1 } = req.query;
+
+    const deliveryproblems = await DeliveryProblem.findAndCountAll({
+      order: ['created_at', 'updated_at'],
+      attributes: ['id', 'delivery_id', 'description'],
+      limit: 6,
+      offset: (page - 1) * 6,
+      include: [
+        {
+          model: Order,
+          as: 'order',
+          attributes: ['id', 'product', 'canceled_at'],
+        },
+      ],
+    });
+
+    if (!deliveryproblems) {
+      return res
+        .status(400)
+        .json({ error: 'There isnt any delivery problem for this delivery' });
+    }
+    deliveryproblems.rows = deliveryproblems.rows.filter(
+      problem => problem.order.canceled_at === null
+    );
+    deliveryproblems.count = deliveryproblems.rows.length;
+
+    return res.json(deliveryproblems);
+  }
+
+  async show(req, res) {
     const { delivery_id } = req.params;
 
-    const deliveryproblems = await DeliveryProblem.findAll({
+    const deliveryproblems = await DeliveryProblem.findAndCountAll({
       where: {
         delivery_id,
       },

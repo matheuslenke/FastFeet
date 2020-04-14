@@ -26,20 +26,20 @@ class OrderController {
   }
 
   async index(req, res) {
-    const { page = 1, q = '' } = req.query;
+    const { page = 1, name = '' } = req.query;
 
     if (page == 0) {
       return res.status(400).json({ error: 'Not a valid page' });
     }
-    const orders = await Order.findAll({
+    const orders = await Order.findAndCountAll({
       where: {
         product: {
-          [Op.iLike]: `%${q}%`,
+          [Op.iLike]: `%${name}%`,
         },
       },
       attributes: ['product', 'id', 'start_date', 'canceled_at', 'end_date'],
-      limit: 5,
-      offset: (page - 1) * 5,
+      limit: 6,
+      offset: (page - 1) * 6,
       include: [
         {
           model: Recipient,
@@ -152,6 +152,24 @@ class OrderController {
     }
 
     await order.update(req.body);
+
+    return res.json({ ok: true });
+  }
+
+  async delete(req, res) {
+    const { orderId } = req.params;
+
+    const order = await Order.findByPk(orderId);
+
+    if (!order) {
+      return res.status(400).json({ error: 'Order not found' });
+    }
+
+    order.destroy({
+      where: {
+        id: orderId,
+      },
+    });
 
     return res.json({ ok: true });
   }
