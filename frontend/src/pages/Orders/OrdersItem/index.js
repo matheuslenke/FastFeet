@@ -40,6 +40,13 @@ export default function OrdersItem({ order, handleDelete }) {
     }
   }, [order.end_date]);
 
+  const nameInitials = useMemo(() => {
+    return order.deliveryman.name
+      .split(' ')
+      .map((n) => n[0])
+      .join('');
+  }, [order.deliveryman.name]);
+
   useEffect(() => {
     if (order.canceled_at !== null) {
       setStatusColor(colors.status.canceled);
@@ -68,7 +75,7 @@ export default function OrdersItem({ order, handleDelete }) {
       <td>{order.recipient.name}</td>
       <td>
         <DeliverymanDiv>
-          {order.deliveryman.avatar.url ? (
+          {order.deliveryman.avatar ? (
             <img
               src={order.deliveryman.avatar.url}
               alt={order.deliveryman.name}
@@ -76,7 +83,7 @@ export default function OrdersItem({ order, handleDelete }) {
           ) : (
             <AvatarDefault>
               {' '}
-              <span>JD</span>
+              <span>{nameInitials}</span>
             </AvatarDefault>
           )}
           <span>{order.deliveryman.name}</span>

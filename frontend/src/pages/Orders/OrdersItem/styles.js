@@ -43,9 +43,13 @@ export const AvatarDefault = styled.div`
   border-radius: 50%;
   width: 35px;
   height: 35px;
-  background: #642346;
+  background: #ddd;
   color: #fff;
   margin-right: 5px;
+
+  span {
+    color: #333;
+  }
 `;
 
 export const StatusTag = styled.object.attrs((props) => ({

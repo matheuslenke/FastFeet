@@ -22,7 +22,6 @@ export default function Orders() {
   const [page, setPage] = useState(1);
   const [searchName, setSearchName] = useState('');
   const [endOfPages, setEndOfPages] = useState(false);
-  const [hasVisibleActions, sethasVisibleActions] = useState(false);
 
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
