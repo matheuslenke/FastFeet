@@ -1,34 +1,16 @@
 import React from 'react';
 import { View } from 'react-native';
+import StepIndicator from 'react-native-step-indicator';
 
-import {
-  Container,
-  Progress,
-  ProgressLine,
-  ProgressText,
-  ProgressLabels,
-} from './styles';
+import customStyles from './styles';
 
-export default function ProgressBar() {
+export default function ProgressBar({ currentStep = 1 }) {
   return (
-    <Container>
-      <ProgressLine>
-        <Progress>
-          <ProgressLabels>
-            <ProgressText>Aguardando Retirada</ProgressText>
-          </ProgressLabels>
-        </Progress>
-        <Progress>
-          <ProgressLabels>
-            <ProgressText>Retirada</ProgressText>
-          </ProgressLabels>
-        </Progress>
-        <Progress>
-          <ProgressLabels>
-            <ProgressText>Entregue</ProgressText>
-          </ProgressLabels>
-        </Progress>
-      </ProgressLine>
-    </Container>
+    <StepIndicator
+      stepCount={3}
+      customStyles={customStyles}
+      currentPosition={currentStep}
+      labels={['Aguardando Retirada', 'Retirada', 'Entregue']}
+    />
   );
 }

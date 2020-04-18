@@ -39,3 +39,14 @@ export const LogoutButton = styled(Button)`
   align-self: stretch;
   margin: 30px;
 `;
+
+export const AvatarDefault = styled.View`
+  justify-content: center;
+  align-items: center;
+  border-radius: 35px;
+  width: 70px;
+  height: 70px;
+  background: #ddd;
+  color: #fff;
+  margin-right: 5px;
+`;

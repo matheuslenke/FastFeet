@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Image, StatusBar } from 'react-native';
+import { Image, Text, StatusBar, ActivityIndicator } from 'react-native';
 
 import { Container, Form, FormInput } from './styles';
 import logo from '~/assets/logo-white.png';
@@ -10,6 +10,7 @@ import { signInRequest } from '~/store/modules/auth/actions';
 
 export default function SignIn() {
   const [id, setId] = useState('');
+
   const dispatch = useDispatch();
 
   const loading = useSelector((state) => state.auth.loading);
@@ -36,7 +37,11 @@ export default function SignIn() {
           onChangeText={setId}
         />
         <Button loading={false} onPress={handleSubmit}>
-          Entrar no sistema
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text>Entrar no sistema</Text>
+          )}
         </Button>
       </Form>
     </Container>

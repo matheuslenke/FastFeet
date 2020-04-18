@@ -12,10 +12,22 @@ export const Container = styled.SafeAreaView`
 `;
 
 export const Welcome = styled.View`
+  width: 100%;
+  padding: 0 40px;
   flex-direction: row;
   margin-top: 20px;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
+`;
+export const AvatarDefault = styled.View`
+  justify-content: center;
+  align-items: center;
+  border-radius: 35px;
+  width: 70px;
+  height: 70px;
+  background: #ddd;
+  color: #fff;
+  margin-right: 5px;
 `;
 
 export const Avatar = styled.Image`
@@ -35,6 +47,7 @@ export const WelcomeInfo = styled.Text`
 `;
 
 export const OrdersDiv = styled.View`
+  flex: 1;
   margin: 20px;
   padding: 0 20px;
   width: 100%;
@@ -64,76 +77,14 @@ export const Filter = styled.TouchableOpacity`
 export const FilterText = styled.Text`
   color: ${(props) => (props.active ? colors.primary : '#999')};
   text-decoration: ${(props) => (props.active ? 'underline' : 'none')};
+  text-decoration-color: ${colors.primary};
   font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
 `;
 
-export const OrdersList = styled.View``;
+export const OrdersList = styled.FlatList.attrs({
+  showsVerticalScrollIndicator: false,
+})``;
 
-export const Order = styled.View`
-  border: 1px solid #ddd;
-  align-self: stretch;
-`;
-
-export const Head = styled.View`
-  padding: 10px;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-export const OrderTitle = styled.Text`
-  margin-left: 10px;
-  font-size: 14px;
-  font-weight: bold;
-  color: ${colors.primary};
-`;
-
-export const OrderFooter = styled.View`
-  margin-top: 20px;
-  background: #f8f9fd;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const OrderDate = styled.View`
-  margin: 20px;
-`;
-
-export const DateTitle = styled.Text`
-  font-size: 10px;
-  color: #999;
-  margin-bottom: 5px;
-`;
-
-export const DateInfo = styled.Text`
-  font-size: 12px;
-  font-weight: bold;
-  color: #333;
-`;
-
-export const OrderCity = styled.View`
-  margin: 20px;
-`;
-
-export const CityTitle = styled.Text`
-  font-size: 10px;
-  color: #999;
-  margin-bottom: 5px;
-`;
-
-export const CityInfo = styled.Text`
-  font-size: 12px;
-  font-weight: bold;
-  color: #333;
-`;
-
-export const OrderDetails = styled.TouchableOpacity`
-  margin: 20px;
-`;
-
-export const DetailsTitle = styled.Text`
-  font-weight: bold;
-  font-size: 12px;
-  color: #7d40e7;
+export const OrderContainer = styled.View`
+  margin: 10px 0;
 `;

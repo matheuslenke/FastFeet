@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { parseISO, format } from 'date-fns';
+import { Text } from 'react-native';
 
 import {
   Container,
@@ -9,6 +9,7 @@ import {
   Title,
   Info,
   LogoutButton,
+  AvatarDefault,
 } from './styles';
 
 import { signOut } from '~/store/modules/auth/actions';
@@ -20,11 +21,22 @@ export default function Profile() {
   function handleLogout() {
     dispatch(signOut());
   }
+
+  const nameInitials = useMemo(() => {
+    const splitName = profile?.name?.toUpperCase().split(' ');
+
+    return splitName?.map((name) => name[0]);
+  }, [profile]);
+
   return (
     <Container>
-      <Avatar
-        source={{ uri: 'https://api.adorable.io/avatar/100/deliveryman.png' }}
-      />
+      {profile.avatar ? (
+        <Avatar source={{ uri: profile.avatar.url }} />
+      ) : (
+        <AvatarDefault>
+          <Text>{nameInitials}</Text>
+        </AvatarDefault>
+      )}
       <ProfileInfo>
         <Title>Nome completo</Title>
         <Info> {profile.name}</Info>
