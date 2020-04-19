@@ -21,7 +21,7 @@ export default function Orders() {
 
   const loading = useSelector((state) => state.deliverymans.loading);
   const { deliverymans } = useSelector((state) => state.deliverymans);
-  const deliverymansCount = useSelector((state) => state.count);
+  const deliverymansCount = useSelector((state) => state.deliverymans.count);
 
   useEffect(() => {
     dispatch(getDeliverymansRequest(page, searchName));
@@ -45,6 +45,7 @@ export default function Orders() {
       setEndOfPages(true);
     }
     if (page * 6 < deliverymansCount) {
+      
       setEndOfPages(false);
     }
   }, [page, deliverymans]);
