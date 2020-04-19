@@ -24,8 +24,6 @@ export default function OrdersForm() {
   const formRef = useRef(null);
   const [recipient, setRecipient] = useState(null);
   const [deliveryman, setDeliveryman] = useState(null);
-  const [recipients, setRecipients] = useState([]);
-  const [deliverymans, setDeliverymans] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -36,8 +34,6 @@ export default function OrdersForm() {
       },
     });
     if (response) {
-      setRecipients(response.data);
-
       const data = response.data.rows.map((item) => ({
         value: item.id,
         label: item.name,
@@ -55,8 +51,6 @@ export default function OrdersForm() {
     });
 
     if (response) {
-      setDeliverymans(response.data);
-
       const data = response.data.rows.map((item) => ({
         value: item.id,
         label: item.name,
