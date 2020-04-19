@@ -15,7 +15,7 @@ export const Content = styled.View`
 `;
 
 export const Card = styled.View`
-  height: 90%;
+  flex: 10;
   overflow: hidden;
   align-self: stretch;
   border-radius: 4px;
@@ -25,6 +25,7 @@ export const SubmitButton = styled(Button)`
   background: ${colors.primary};
   align-self: stretch;
   margin: 15px 30px;
+  flex: 1;
 `;
 
 export const TakePictureButton = styled.TouchableOpacity`
@@ -45,6 +46,16 @@ export const CameraActionsDiv = styled.View`
   margin-bottom: 20px;
 `;
 
+export const CloseButton = styled.TouchableOpacity`
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  background: rgba(255, 255, 255, 0.3);
+`;
 export const ChangeCameraButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
@@ -52,4 +63,13 @@ export const ChangeCameraButton = styled.TouchableOpacity`
   height: 70px;
   border-radius: 35px;
   background: rgba(255, 255, 255, 0.3);
+`;
+
+export const Preview = styled.Image`
+  flex: 10;
+  width: 100%;
+  height: 100%;
+  border: dashed;
+  align-items: center;
+  justify-content: flex-end;
 `;

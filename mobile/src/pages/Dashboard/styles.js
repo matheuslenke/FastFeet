@@ -48,8 +48,8 @@ export const WelcomeInfo = styled.Text`
 
 export const OrdersDiv = styled.View`
   flex: 1;
-  margin: 20px;
-  padding: 0 20px;
+  margin: 20px 0;
+  padding: 0px;
   width: 100%;
 `;
 
@@ -75,10 +75,10 @@ export const Filter = styled.TouchableOpacity`
 `;
 
 export const FilterText = styled.Text`
-  color: ${(props) => (props.active ? colors.primary : '#999')};
-  text-decoration: ${(props) => (props.active ? 'underline' : 'none')};
+  color: ${props => (props.active ? colors.primary : '#999')};
+  text-decoration: ${props => (props.active ? 'underline' : 'none')};
   text-decoration-color: ${colors.primary};
-  font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
+  font-weight: ${props => (props.active ? 'bold' : 'normal')};
 `;
 
 export const OrdersList = styled.FlatList.attrs({

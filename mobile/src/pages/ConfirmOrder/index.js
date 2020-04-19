@@ -13,6 +13,8 @@ import {
   TakePictureButton,
   CameraActionsDiv,
   ChangeCameraButton,
+  CloseButton,
+  Preview,
 } from './styles';
 
 import Background from '~/components/Background';
@@ -84,52 +86,65 @@ export default function ConfirmOrder({ navigation, route }) {
     else setCameraType(RNCamera.Constants.Type.back);
   }
 
+  function handleCancel() {
+    setPicture(null);
+  }
+
   return (
     <Background>
       <Content>
         <Card>
-          <RNCamera
-            style={{
-              flex: 1,
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-            }}
-            type={RNCamera.Constants.Type.back}
-            flashMode={RNCamera.Constants.FlashMode.off}
-            androidCameraPermissionOptions={{
-              title: 'Permissão para utilizar a câmera',
-              message: 'Precisamos da sua permissão para utilizar sua câmera',
-              buttonPositive: 'Ok',
-              buttonNegative: 'Cancel',
-            }}
-            androidRecordAudioPermissionOptions={{
-              title: 'Permissão para utilizar seu microfone',
-              message:
-                'Precisamos de sua permissão para utilizar seu microfone',
-              buttonPositive: 'Ok',
-              buttonNegative: 'Cancel',
-            }}
-          >
-            {({ camera, status }) => {
-              if (status !== 'READY') return <PendingView />;
-              return (
-                <CameraActionsDiv
-                  style={{
-                    flex: 0,
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <ChangeCameraButton onPress={switchCamera}>
-                    <Icon name="switch-camera" size={35} color="#fff" />
-                  </ChangeCameraButton>
-                  <TakePictureButton onPress={() => takePicture(camera)}>
-                    <Icon name="photo-camera" size={35} color="#fff" />
-                  </TakePictureButton>
-                </CameraActionsDiv>
-              );
-            }}
-          </RNCamera>
+          {picture ? (
+            <>
+              <Preview source={{ uri: picture.url }} />
+              <CloseButton onPress={handleCancel}>
+                <Icon name="close" size={30} color="#fff" />
+              </CloseButton>
+            </>
+          ) : (
+            <RNCamera
+              style={{
+                flex: 1,
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+              }}
+              type={cameraType}
+              flashMode={RNCamera.Constants.FlashMode.off}
+              androidCameraPermissionOptions={{
+                title: 'Permissão para utilizar a câmera',
+                message: 'Precisamos da sua permissão para utilizar sua câmera',
+                buttonPositive: 'Ok',
+                buttonNegative: 'Cancel',
+              }}
+              androidRecordAudioPermissionOptions={{
+                title: 'Permissão para utilizar seu microfone',
+                message:
+                  'Precisamos de sua permissão para utilizar seu microfone',
+                buttonPositive: 'Ok',
+                buttonNegative: 'Cancel',
+              }}
+            >
+              {({ camera, status }) => {
+                if (status !== 'READY') return <PendingView />;
+                return (
+                  <CameraActionsDiv
+                    style={{
+                      flex: 0,
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <ChangeCameraButton onPress={switchCamera}>
+                      <Icon name="switch-camera" size={35} color="#fff" />
+                    </ChangeCameraButton>
+                    <TakePictureButton onPress={() => takePicture(camera)}>
+                      <Icon name="photo-camera" size={35} color="#fff" />
+                    </TakePictureButton>
+                  </CameraActionsDiv>
+                );
+              }}
+            </RNCamera>
+          )}
         </Card>
         <SubmitButton onPress={handleSubmitSignature}>
           <Text>Enviar</Text>

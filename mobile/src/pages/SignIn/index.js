@@ -13,7 +13,7 @@ export default function SignIn() {
 
   const dispatch = useDispatch();
 
-  const loading = useSelector((state) => state.auth.loading);
+  const loading = useSelector(state => state.auth.loading);
 
   const idRef = useRef();
 
@@ -37,11 +37,7 @@ export default function SignIn() {
           onChangeText={setId}
         />
         <Button loading={false} onPress={handleSubmit}>
-          {loading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text>Entrar no sistema</Text>
-          )}
+          <Text>Entrar no sistema</Text>
         </Button>
       </Form>
     </Container>

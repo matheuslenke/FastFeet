@@ -4,7 +4,6 @@ import colors from '~/styles/colors';
 
 export const Container = styled.View`
   flex: 1;
-
   position: relative;
   z-index: 1;
   background: #fff;
