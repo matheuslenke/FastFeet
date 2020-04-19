@@ -27,7 +27,7 @@
 </p>
 
 
-##👨🏻‍💻 Project
+## 👨🏻‍💻 Project
 
 This Project is a simplified version of an delivery application.
 
@@ -74,7 +74,7 @@ You will need:
 * Android Studio
 
 
-####Databases:
+#### Databases:
 
 I recommend using Docker images for the databases, since its simple to configure it.
 Add the following images to your docker containers:
@@ -99,7 +99,7 @@ After that, clone the repository in your computer
 git clone https://github.com/matheuslenke/Desafio-Final-Fastfeet.git
 ```
 
-####💻Backend:
+#### 💻Backend:
 
 Now you need to configure the **environment variables** of your backend, so you can access all databases with the node.js server.
 Go to **./backend/.env.example** and fill with you data. For now, you don't need to insert **SENTRY_DNS** and you can use mailtrap.io to test e-mail features
@@ -114,7 +114,19 @@ $ yarn dev
 You can also use another port for your server going to ~/backend/src/server.js and changing the port inside `app.listen(PORT)`
 
 
-####🖥Frontend:
+Now, you need to run the database migrations in the docker components you configured. For that, just go to `~/backend` and execute:
+
+```bash
+$ yarn sequelize db:migrate
+
+$ yarn sequelize db:seed:all
+
+# in case you did something wrong, try to
+$ yarn sequelize db:migrate:undo:all
+```
+
+
+#### 🖥Frontend:
 
 Similar to our backend, just go to `~/frontend` and execute:
 ```bash
@@ -126,11 +138,11 @@ $ yarn start
 
 The React application will be mounted in your `http://localhost:3333`
 
-####📱Mobile:
+#### 📱Mobile:
 
 Finally, to run the mobile application, go to `~/mobile` and execute:
 
-#####Android:
+##### Android:
 ```bash
 $ yarn
 
@@ -143,7 +155,7 @@ $ adb reverse tcp:3333 tcp:3333
 $ react-native run-android
 ```
 
-#####iOS:
+##### iOS:
 
 **Only if you are using MacOS**
 
@@ -172,7 +184,8 @@ This project was developed for studying purposes and its the final challenge of 
 
 
 <div id="licence"> </div>
-## 📝 Licence
+
+### 📝 Licence
 
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
 
