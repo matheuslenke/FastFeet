@@ -21,10 +21,11 @@ import history from '~/services/history';
 
 export default function DeliverymanForm() {
   const dispatch = useDispatch();
-  const formRef = useRef(null);
+  const formRef = useRef('Deliveryman');
 
   async function handleSubmit(data, { reset }) {
     try {
+      console.tron.log(formRef);
       formRef.current.setErrors({});
 
       const schema = Yup.object().shape({
@@ -81,7 +82,7 @@ export default function DeliverymanForm() {
           <FormRow>
             <InputDiv>
               <InputLabel>Email</InputLabel>
-              <Input
+              <Input     
                 type="text"
                 name="email"
                 placeholder="exemplo@exemplo.com"

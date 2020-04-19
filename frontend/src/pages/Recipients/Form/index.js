@@ -14,7 +14,7 @@ import BackButton from '~/components/Buttons/BackButton';
 import SaveButton from '~/components/Buttons/SaveButton';
 import Input from '~/components/Form/FormInput';
 
-import { updateRecipientsRequest } from '~/store/modules/recipients/actions';
+import { storeRecipientsRequest } from '~/store/modules/recipients/actions';
 import history from '~/services/history';
 
 export default function RecipientsmanForm() {
@@ -38,7 +38,7 @@ export default function RecipientsmanForm() {
       await schema.validate(data, {
         abortEarly: false,
       });
-      dispatch(updateRecipientsRequest(data));
+      dispatch(storeRecipientsRequest(data));
 
       reset();
     } catch (err) {

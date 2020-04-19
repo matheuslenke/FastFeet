@@ -36,6 +36,18 @@ export default function recipients(state = INITAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@recipients/STORE_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+      case '@recipients/STORE_SUCCESS': {
+        draft.loading = false;
+        break;
+      }
+      case '@recipients/STORE_FAILURE': {
+        draft.loading = false;
+        break;
+      }
 
       default:
         return state;

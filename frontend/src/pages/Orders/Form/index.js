@@ -130,7 +130,7 @@ export default function OrdersForm() {
           <FormRow>
             <InputDiv>
               <InputLabel>Nome do produto</InputLabel>
-              <Input name="product" type="text" placeholder="Produto" />
+              <Input ref={formRef} name="product" type="text" placeholder="Produto" />
             </InputDiv>
           </FormRow>
         </FormSection>

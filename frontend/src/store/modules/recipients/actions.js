@@ -35,3 +35,22 @@ export function updateRecipientsFailure() {
     type: '@recipients/UPDATE_FAILURE',
   };
 }
+
+export function storeRecipientsRequest(data) {
+  return {
+    type: '@recipients/STORE_REQUEST',
+    payload: { data },
+  };
+}
+
+export function storeRecipientsSuccess() {
+  return {
+    type: '@recipients/STORE_SUCCESS',
+  };
+}
+
+export function storeRecipientsFailure() {
+  return {
+    type: '@recipients/STORE_FAILURE',
+  };
+}
