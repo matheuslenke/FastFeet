@@ -57,7 +57,7 @@ export default function OrdersForm() {
     if (response) {
       setRecipients(response.data);
 
-      const data = response.data.map((item) => ({
+      const data = response.data.rows.map((item) => ({
         value: item.id,
         label: item.name,
       }));
@@ -76,7 +76,7 @@ export default function OrdersForm() {
     if (response) {
       setDeliverymans(response.data);
 
-      const data = response.data.map((item) => ({
+      const data = response.data.rows.map((item) => ({
         value: item.id,
         label: item.name,
       }));

@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { format, parseISO } from 'date-fns';
+import PropTypes from 'prop-types';
 import pt from 'date-fns/locale/pt';
 
 import {
@@ -143,7 +144,11 @@ export default function OrdersItem({ order, handleDelete }) {
           <section>
             <h2>Assinatura do Destinatário</h2>
             {order.signature ? (
-              <img src={order.signature.url} alt="Assinatura " />
+              <img
+                src={order.signature.url}
+                alt="Assinatura "
+                style={{ maxWidth: '400px', maxHeight: '200px' }}
+              />
             ) : (
               <p>Sem assinatura</p>
             )}
@@ -153,3 +158,8 @@ export default function OrdersItem({ order, handleDelete }) {
     </>
   );
 }
+
+OrdersItem.propTypes = {
+  handleDelete: PropTypes.func.isRequired,
+  order: PropTypes.object.isRequired,
+};

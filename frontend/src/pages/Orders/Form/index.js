@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import * as Yup from 'yup';
 
 import { Container, Content } from './styles';
 import {
@@ -20,6 +21,7 @@ import api from '~/services/api';
 import { postOrdersRequest } from '~/store/modules/orders/actions';
 
 export default function OrdersForm() {
+  const formRef = useRef(null);
   const [recipient, setRecipient] = useState(null);
   const [deliveryman, setDeliveryman] = useState(null);
   const [recipients, setRecipients] = useState([]);
@@ -36,7 +38,7 @@ export default function OrdersForm() {
     if (response) {
       setRecipients(response.data);
 
-      const data = response.data.map((item) => ({
+      const data = response.data.rows.map((item) => ({
         value: item.id,
         label: item.name,
       }));
@@ -55,7 +57,7 @@ export default function OrdersForm() {
     if (response) {
       setDeliverymans(response.data);
 
-      const data = response.data.map((item) => ({
+      const data = response.data.rows.map((item) => ({
         value: item.id,
         label: item.name,
       }));
@@ -65,10 +67,32 @@ export default function OrdersForm() {
     return [];
   }
 
-  function handleSubmit({ product }, { reset }) {
-    dispatch(postOrdersRequest(product, deliveryman, recipient));
+  async function handleSubmit({ product }, { reset }) {
+    try {
+      formRef.current.setErrors({});
 
-    reset();
+      const schema = Yup.object().shape({
+        product: Yup.string().required('O nome do produto é obrigatório'),
+      });
+
+      await schema.validate(
+        { product },
+        {
+          abortEarly: false,
+        }
+      );
+      dispatch(postOrdersRequest(product, deliveryman, recipient));
+      reset();
+    } catch (err) {
+      const validationErrors = {};
+
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach((error) => {
+          validationErrors[error.path] = error.message;
+        });
+        formRef.current.setErrors(validationErrors);
+      }
+    }
   }
 
   return (
@@ -82,7 +106,7 @@ export default function OrdersForm() {
           </div>
         </header>
 
-        <FormSection onSubmit={handleSubmit} id="order-form">
+        <FormSection ref={formRef} onSubmit={handleSubmit} id="order-form">
           <FormRow>
             <InputDiv>
               <InputLabel>Destinatário</InputLabel>

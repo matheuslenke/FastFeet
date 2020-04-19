@@ -22,7 +22,7 @@ export default function Orders() {
 
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
-  const ordersCount = useSelector((state) => state.ordersCount);
+  const ordersCount = useSelector((state) => state.orders.ordersCount);
 
   useEffect(() => {
     async function loadOrders() {

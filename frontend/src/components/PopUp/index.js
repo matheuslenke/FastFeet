@@ -1,5 +1,6 @@
 import React from 'react';
 import Popup from 'reactjs-popup';
+import PropTypes from 'prop-types';
 
 import { MdMoreHoriz } from 'react-icons/md';
 import { MoreButton } from './styles';
@@ -29,3 +30,7 @@ export default function PopUp({ children }) {
     </Popup>
   );
 }
+
+PopUp.propTypes = {
+  children: PropTypes.element.isRequired,
+};

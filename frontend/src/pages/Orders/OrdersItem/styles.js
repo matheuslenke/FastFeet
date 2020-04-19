@@ -56,7 +56,7 @@ export const AvatarDefault = styled.div.attrs((props) => ({
   }
 `;
 
-export const StatusTag = styled.object.attrs((props) => ({
+export const StatusTag = styled.div.attrs((props) => ({
   color: props.color,
   backgroundcolor: lighten(0.33, props.color),
 }))`
@@ -65,6 +65,10 @@ export const StatusTag = styled.object.attrs((props) => ({
   font-weight: bold;
   padding: 5px 10px;
   border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
 
   &::before {
     content: ' ';

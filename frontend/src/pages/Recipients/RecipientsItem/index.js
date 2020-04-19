@@ -17,6 +17,7 @@ export default function RecipientsItem({ recipient, handleDelete }) {
       <td>
         <span>{recipient.name}</span>
       </td>
+      <td>{formattedAdress}</td>
       <td>
         <PopUp>
           <Actions recipient={recipient} handleDelete={handleDelete} />

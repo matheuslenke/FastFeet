@@ -7,3 +7,9 @@ export const FormInput = styled.input`
   height: 45px;
   border-radius: 4px;
 `;
+
+export const ErrorSpan = styled.span`
+  font-weight: bold;
+  align-self: flex-start;
+  margin: 10px;
+`;

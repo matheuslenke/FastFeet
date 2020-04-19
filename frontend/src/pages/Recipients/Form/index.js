@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import * as Yup from 'yup';
 
 import { Container, Content } from './styles';
 import {
@@ -17,26 +18,57 @@ import { updateRecipientsRequest } from '~/store/modules/recipients/actions';
 import history from '~/services/history';
 
 export default function RecipientsmanForm() {
+  const formRef = useRef(null);
   const dispatch = useDispatch();
 
-  function handleSubmit(data, { reset }) {
-    dispatch(updateRecipientsRequest(data));
+  async function handleSubmit(data, { reset }) {
+    try {
+      formRef.current.setErrors({});
 
-    reset();
+      const schema = Yup.object().shape({
+        name: Yup.string().required('O nome é obrigatório'),
+        street: Yup.string().required('A rua é obrigatória'),
+        number: Yup.string().required('O número é obrigatório'),
+        complement: Yup.string(),
+        city: Yup.string().required('A cidade é obrigatória'),
+        state: Yup.string().required('O estado é obrigatório'),
+        cep: Yup.string().required('O CEP é obrigatório'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+      dispatch(updateRecipientsRequest(data));
+
+      reset();
+    } catch (err) {
+      const validationErrors = {};
+
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach((error) => {
+          validationErrors[error.path] = error.message;
+        });
+        formRef.current.setErrors(validationErrors);
+      }
+    }
   }
 
   return (
     <Container>
       <Content>
         <header>
-          <h1>Cadastro de entregadores</h1>
+          <h1>Cadastro de destinatários</h1>
           <div>
             <BackButton onClick={() => history.goBack()} />
             <SaveButton type="submit" form="deliveryman-form" />
           </div>
         </header>
 
-        <FormSection onSubmit={handleSubmit} id="deliveryman-form">
+        <FormSection
+          ref={formRef}
+          onSubmit={handleSubmit}
+          id="deliveryman-form"
+        >
           <FormRow>
             <InputDiv>
               <InputLabel>Nome</InputLabel>
@@ -81,7 +113,7 @@ export default function RecipientsmanForm() {
             </InputDiv>
             <InputDiv>
               <InputLabel>Estado</InputLabel>
-              <Input type="text" name="state" placeholder="São Paulo" />
+              <Input type="text" name="state" placeholder="SP" />
             </InputDiv>
             <InputDiv>
               <InputLabel>CEP</InputLabel>

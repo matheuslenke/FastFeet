@@ -84,6 +84,7 @@ export default function Orders() {
           <thead>
             <tr>
               <th>ID</th>
+              <th>Nome</th>
               <th>Endereço</th>
               <th>Ações</th>
             </tr>

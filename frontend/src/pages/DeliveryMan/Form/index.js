@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import * as Yup from 'yup';
 
 import AvatarInput from './AvatarInput';
 
@@ -20,11 +21,34 @@ import history from '~/services/history';
 
 export default function DeliverymanForm() {
   const dispatch = useDispatch();
+  const formRef = useRef(null);
 
-  function handleSubmit(data, { reset }) {
-    dispatch(storeDeliverymansRequest(data));
+  async function handleSubmit(data, { reset }) {
+    try {
+      formRef.current.setErrors({});
 
-    // reset();
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .email('Insira um e-mail válido')
+          .required('O email é obrigatório'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      dispatch(storeDeliverymansRequest(data));
+      reset();
+    } catch (err) {
+      const validationErrors = {};
+
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach((error) => {
+          validationErrors[error.path] = error.message;
+        });
+        formRef.current.setErrors(validationErrors);
+      }
+    }
   }
 
   return (
@@ -38,7 +62,11 @@ export default function DeliverymanForm() {
           </div>
         </header>
 
-        <FormSection onSubmit={handleSubmit} id="deliveryman-form">
+        <FormSection
+          ref={formRef}
+          onSubmit={handleSubmit}
+          id="deliveryman-form"
+        >
           <FormRow>
             <InputDiv>
               <AvatarInput name="avatar_id" />

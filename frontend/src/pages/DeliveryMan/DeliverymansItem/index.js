@@ -1,13 +1,8 @@
 import React, { useState, useMemo } from 'react';
 
-import {
-  DeliverymanItem,
-  DeliverymanDiv,
-  AvatarDefault,
-  StatusTag,
-} from './styles';
+import PropTypes from 'prop-types';
+import { DeliverymanItem, DeliverymanDiv, AvatarDefault } from './styles';
 import PopUp from '~/components/PopUp';
-import colors from '~/styles/colors';
 
 import Actions from './Actions';
 
@@ -18,13 +13,14 @@ export default function DeliverymansItem({ deliveryman, handleDelete }) {
     setVisibleModal(!visibleModal);
   }
 
-  const nameInitials = useMemo(() => {
-    return deliveryman.name
-      .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase();
-  }, [deliveryman.name]);
+  const nameInitials = useMemo(
+    () =>
+      deliveryman.name
+        .toUpperCase()
+        .split(' ')
+        .map((n) => n[0]),
+    [deliveryman.name]
+  );
 
   const randomColor = useMemo(() => {
     const rgb = [];
@@ -67,3 +63,7 @@ export default function DeliverymansItem({ deliveryman, handleDelete }) {
     </DeliverymanItem>
   );
 }
+
+DeliverymanItem.propTypes = {
+  deliveryman: PropTypes.object.isRequired,
+};
