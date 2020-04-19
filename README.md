@@ -20,11 +20,12 @@
 </p>
 
 <p align="center">
-  <a href="#rocket-sobre-o-desafio">Sobre o desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-entrega">Entrega</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#memo-licença">Licença</a>
+  <a href="#project">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#how-to-run">How to run</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#licence">Licence</a>
 </p>
+
 
 ##👨🏻‍💻 Project
 
@@ -59,6 +60,7 @@ Some of the Technologies involved in this project:
 * Sentry
 * VsCode
 
+<div id="how-to-run"> </div>
 ### 🏃🏻‍♂️ How to run 
 
 #### Requirements
@@ -159,13 +161,17 @@ $ react-native run-ios
 ```
 
 
+Now you can start testing or programming. Have Fun!
+
+---
+
 
 ### Extra info
 
 This project was developed for studying purposes and its the final challenge of <a href="https://rocketseat.com.br/gostack"> Rocketseat's bootcamp goStack 10.0 </a>
 
 
-
+<div id="licence"> </div>
 ## 📝 Licence
 
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
