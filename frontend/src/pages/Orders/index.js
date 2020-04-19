@@ -29,7 +29,7 @@ export default function Orders() {
       dispatch(getOrdersRequest(page, searchName));
     }
     loadOrders();
-  }, [page, searchName]);
+  }, [page, searchName, dispatch]);
 
   useEffect(() => {
     if (page * 6 >= ordersCount) {
@@ -37,7 +37,7 @@ export default function Orders() {
     } else {
       setEndOfPages(false);
     }
-  }, [page, orders]);
+  }, [page, orders, ordersCount]);
 
   async function handleDelete(orderId) {
     try {

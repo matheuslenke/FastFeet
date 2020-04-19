@@ -1,15 +1,16 @@
-import React, { useState, useMemo } from 'react';
+import React, {  useMemo } from 'react';
 
-import { RecipientItem, StatusTag } from './styles';
+import { RecipientItem } from './styles';
 import PopUp from '~/components/PopUp';
 
 import Actions from './Actions';
 
 export default function RecipientsItem({ recipient, handleDelete }) {
+
   const formattedAdress = useMemo(() => {
     const adress = `${recipient.street}, ${recipient.cep}, ${recipient.city}, ${recipient.state}`;
     return adress;
-  }, [recipient.city]);
+  }, [recipient.city, recipient.street, recipient.cep, recipient.state]);
 
   return (
     <RecipientItem>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { lighten } from 'polished';
+
 
 export const ProblemItem = styled.tr`
   color: #666;
@@ -27,11 +27,7 @@ export const ProblemItem = styled.tr`
   }
 `;
 
-export const ProblemsDiv = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-`;
+
 
 export const ModalInfo = styled.div`
   section + section {

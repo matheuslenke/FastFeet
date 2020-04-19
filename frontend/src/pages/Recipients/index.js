@@ -12,7 +12,6 @@ import RecipientsItem from './RecipientsItem';
 
 import {
   getRecipientsRequest,
-  deleteRecipientsRequest,
 } from '~/store/modules/recipients/actions';
 import api from '~/services/api';
 
@@ -22,13 +21,12 @@ export default function Orders() {
   const [page, setPage] = useState(1);
   const [endOfPages, setEndOfPages] = useState(false);
 
-  const loading = useSelector((state) => state.recipients.loading);
   const { recipients } = useSelector((state) => state.recipients);
   const recipientsCount = useSelector((state) => state.recipients.count);
 
   useEffect(() => {
     dispatch(getRecipientsRequest(page, searchName));
-  }, [page, searchName]);
+  }, [page, searchName, dispatch]);
 
   async function handleDelete(recipient_id) {
     try {
@@ -50,7 +48,7 @@ export default function Orders() {
     if (page * 6 < recipientsCount) {
       setEndOfPages(false);
     }
-  }, [page, recipients]);
+  }, [page, recipients, recipientsCount]);
 
   function handlePageBack() {
     if (page === 1) {

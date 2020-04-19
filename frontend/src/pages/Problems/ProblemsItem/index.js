@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ProblemItem, ModalInfo, ProblemsDiv } from './styles';
+import { ProblemItem, ModalInfo } from './styles';
 
 import Actions from './Actions';
 import Modal from '../Modal';

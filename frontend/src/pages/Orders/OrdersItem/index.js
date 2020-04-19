@@ -56,7 +56,7 @@ export default function OrdersItem({ order, handleDelete }) {
     }
     const stringrgb = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     return stringrgb;
-  }, [order.deliveryman.avatar]);
+  }, []);
 
   useEffect(() => {
     if (order.canceled_at !== null) {

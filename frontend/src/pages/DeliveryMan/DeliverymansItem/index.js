@@ -30,7 +30,7 @@ export default function DeliverymansItem({ deliveryman, handleDelete }) {
     }
     const stringrgb = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     return stringrgb;
-  }, [deliveryman.avatar]);
+  }, []);
 
   return (
     <DeliverymanItem>

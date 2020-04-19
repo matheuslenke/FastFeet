@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import { Link } from 'react-router-dom';
-import { MdVisibility, MdCreate, MdDelete } from 'react-icons/md';
-import { Container, ActionsList, Visualize, Edit, Delete } from './styles';
+import { MdCreate, MdDelete } from 'react-icons/md';
+import { Container, ActionsList, Edit, Delete } from './styles';
 
-import history from '~/services/history';
 
 export default function Actions({ recipient, handleDelete }) {
   return (

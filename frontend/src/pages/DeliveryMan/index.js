@@ -19,13 +19,13 @@ export default function Orders() {
   const [page, setPage] = useState(1);
   const [endOfPages, setEndOfPages] = useState(false);
 
-  const loading = useSelector((state) => state.deliverymans.loading);
+  // const loading = useSelector((state) => state.deliverymans.loading);  const [recipients, setRecipients] = useState([]);
   const { deliverymans } = useSelector((state) => state.deliverymans);
   const deliverymansCount = useSelector((state) => state.deliverymans.count);
 
   useEffect(() => {
     dispatch(getDeliverymansRequest(page, searchName));
-  }, [page, searchName]);
+  }, [page, searchName, dispatch]);
 
   async function handleDelete(deliveryman_id) {
     try {
@@ -48,7 +48,7 @@ export default function Orders() {
       
       setEndOfPages(false);
     }
-  }, [page, deliverymans]);
+  }, [page, deliverymans, deliverymansCount]);
 
   function handlePageBack() {
     if (page === 1) {

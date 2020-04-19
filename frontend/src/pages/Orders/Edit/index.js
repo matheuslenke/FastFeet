@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { Container, Content } from './styles';
 import {
@@ -23,8 +23,6 @@ import { updateOrdersRequest } from '~/store/modules/orders/actions';
 export default function OrdersForm() {
   const [recipient, setRecipient] = useState(null);
   const [deliveryman, setDeliveryman] = useState(null);
-  const [recipients, setRecipients] = useState([]);
-  const [deliverymans, setDeliverymans] = useState([]);
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -46,7 +44,7 @@ export default function OrdersForm() {
   useEffect(() => {
     setDeliveryman(initialData.deliveryman_id);
     setRecipient(initialData.recipient_id);
-  }, []);
+  }, [ initialData.deliveryman_id, initialData.recipient_id]);
 
   async function loadRecipients(InputValue) {
     const response = await api.get('/recipients', {
@@ -55,7 +53,6 @@ export default function OrdersForm() {
       },
     });
     if (response) {
-      setRecipients(response.data);
 
       const data = response.data.rows.map((item) => ({
         value: item.id,
@@ -74,7 +71,6 @@ export default function OrdersForm() {
     });
 
     if (response) {
-      setDeliverymans(response.data);
 
       const data = response.data.rows.map((item) => ({
         value: item.id,

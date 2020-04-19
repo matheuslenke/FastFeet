@@ -5,7 +5,7 @@ import { Select } from './styles';
 
 export default function SelectInput({ name, ...rest }) {
   const selectRef = useRef(null);
-  const { fieldName, defaultValue, registerField, error } = useField(name);
+  const { fieldName, defaultValue, registerField } = useField(name);
   useEffect(() => {
     registerField({
       name: fieldName,

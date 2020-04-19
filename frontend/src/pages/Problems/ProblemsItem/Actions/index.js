@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import { MdVisibility, MdDelete } from 'react-icons/md';
 import { Container, ActionsList, Visualize, Delete } from './styles';

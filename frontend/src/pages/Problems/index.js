@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import { toast } from 'react-toastify';
@@ -15,13 +14,13 @@ export default function Orders() {
   const [page, setPage] = useState(1);
   const [endOfPages, setEndOfPages] = useState(false);
 
-  const loading = useSelector((state) => state.problems.loading);
+  // const loading = useSelector((state) => state.problems.loading);
   const { problems } = useSelector((state) => state.problems);
   const problemsCount = useSelector((state) => state.problems.count);
 
   useEffect(() => {
     dispatch(getProblemsRequest(page));
-  }, [page]);
+  }, [page, dispatch]);
 
   async function handleDelete(problem_id) {
     try {
@@ -41,7 +40,7 @@ export default function Orders() {
     } else {
       setEndOfPages(false);
     }
-  }, [page, problems]);
+  }, [page, problems, problemsCount]);
 
   function handlePageBack() {
     if (page === 1) {
