@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { Op } from 'sequelize';
 import Order from '../models/Order';
 import Deliveryman from '../models/Deliveryman';
+import DeliveryProblem from '../models/DeliveryProblem';
 import Recipient from '../models/Recipient';
 import File from '../models/File';
 
@@ -165,7 +166,23 @@ class OrderController {
       return res.status(400).json({ error: 'Order not found' });
     }
 
-    order.destroy({
+    if (order.signature_id) {
+      const signature = await File.findOne({
+        where: {
+          id: order.signature_id,
+        },
+      });
+
+      await signature.destroy();
+    }
+
+    await DeliveryProblem.destroy({
+      where: {
+        delivery_id: orderId,
+      },
+    });
+
+    await order.destroy({
       where: {
         id: orderId,
       },

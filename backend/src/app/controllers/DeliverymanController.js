@@ -8,7 +8,19 @@ class DeliverymanController {
   async show(req, res) {
     const { deliveryman_id } = req.params;
 
-    const deliveryman = await Deliveryman.findByPk(deliveryman_id);
+    const deliveryman = await Deliveryman.findOne({
+      where: {
+        id: deliveryman_id,
+      },
+      attributes: ['id', 'name', 'email', 'createdAt'],
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['id', 'name', 'path', 'url'],
+        },
+      ],
+    });
 
     if (!deliveryman) {
       return res.status(400).json({ error: 'Deliveryman not found' });

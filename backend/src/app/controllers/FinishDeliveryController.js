@@ -35,7 +35,7 @@ class FinishDeliveryController {
         .json({ error: 'Order doesnt exists or its canceled' });
     }
 
-    const updatedOrder = order.update({
+    const updatedOrder = await order.update({
       signature_id,
       end_date: new Date(),
     });

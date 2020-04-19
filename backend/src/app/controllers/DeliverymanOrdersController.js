@@ -16,19 +16,24 @@ import Recipient from '../models/Recipient';
 class DeliverymanOrdersController {
   async index(req, res) {
     const { deliveryman_id } = req.params;
+    const { page = 1 } = req.query;
 
     const deliverymanExists = await Deliveryman.findByPk(deliveryman_id);
 
     if (!deliverymanExists) {
       return res.status(400).json({ error: 'Deliveryman not found' });
     }
+    const CountOrders = await Order.count();
+
     const orders = await Order.findAll({
       where: {
         deliveryman_id,
-        end_date: null,
         canceled_at: null,
+        end_date: null,
       },
-      attributes: ['id', 'product', 'start_date'],
+      limit: 10,
+      offset: (page - 1) * 10,
+      attributes: ['id', 'product', 'start_date', 'end_date', 'createdAt'],
       include: [
         {
           model: Recipient,
@@ -47,6 +52,53 @@ class DeliverymanOrdersController {
         },
       ],
     });
+
+    res.header('X-Total-Count', CountOrders);
+
+    return res.json(orders);
+  }
+
+  async indexDone(req, res) {
+    const { deliveryman_id } = req.params;
+    const { page = 1 } = req.query;
+
+    const deliverymanExists = await Deliveryman.findByPk(deliveryman_id);
+
+    if (!deliverymanExists) {
+      return res.status(400).json({ error: 'Deliveryman not found' });
+    }
+    const CountOrders = await Order.count();
+
+    const orders = await Order.findAll({
+      where: {
+        deliveryman_id,
+        canceled_at: null,
+        end_date: { [Op.ne]: null },
+      },
+      limit: 10,
+      offset: (page - 1) * 10,
+      attributes: ['id', 'product', 'start_date', 'end_date'],
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'complement',
+            'state',
+            'city',
+            'cep',
+            'created_at',
+          ],
+        },
+      ],
+    });
+
+    res.header('X-Total-Count', CountOrders);
+
     return res.json(orders);
   }
 
@@ -69,6 +121,23 @@ class DeliverymanOrdersController {
           [Op.between]: [startOfDay(now), endOfDay(now)],
         },
       },
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'complement',
+            'state',
+            'city',
+            'cep',
+            'created_at',
+          ],
+        },
+      ],
     });
 
     if (totalPickups.count > 5) {
@@ -77,7 +146,28 @@ class DeliverymanOrdersController {
         .json({ error: 'You exceeded the limit of deliveries for today' });
     }
 
-    const order = await Order.findByPk(order_id);
+    const order = await Order.findOne({
+      where: {
+        id: order_id,
+      },
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'complement',
+            'state',
+            'city',
+            'cep',
+            'created_at',
+          ],
+        },
+      ],
+    });
     if (!order) {
       return res.status(400).json({ error: 'Order doesnt exists' });
     }

@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { Op } from 'sequelize';
 
 import Recipient from '../models/Recipient';
+import Order from '../models/Order';
 
 class RecipientController {
   async index(req, res) {
@@ -71,11 +72,9 @@ class RecipientController {
       return res.status(400).json({ error: 'Recipient not found' });
     }
 
-    await recipient.destroy({
-      where: {
-        id,
-      },
-    });
+    await Order.destroy({ where: { recipient_id: id } });
+
+    await recipient.destroy();
 
     return res.json({ ok: true });
   }

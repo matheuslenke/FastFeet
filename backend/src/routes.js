@@ -27,6 +27,10 @@ routes.get(
   '/deliveryman/:deliveryman_id/deliveries',
   DeliverymanOrdersController.index
 );
+routes.get(
+  '/deliveryman/:deliveryman_id/deliveries/done',
+  DeliverymanOrdersController.indexDone
+);
 routes.put(
   '/deliveryman/:deliveryman_id/deliveries/:order_id',
   DeliverymanOrdersController.update
