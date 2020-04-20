@@ -159,7 +159,9 @@ $ adb reverse tcp:3333 tcp:3333
 $ react-native run-android
 ```
 
-And if you are running via USB, don't forget to go into `~/config/ReactotronConfig.js` and insert your machine ip in .configure: `.configure({url: 'Your Machine IP'})`
+* if you are running via USB, don't forget to go into `~/config/ReactotronConfig.js` and insert your machine ip in .configure: `.configure({url: 'Your Machine IP'})`, and to go to `~/services/api` and change baseUrl to your machine ip too
+
+* if you are using an android emulator, using `10.0.2.2` as baseURL in these configs should work
 
 ##### iOS:
 
