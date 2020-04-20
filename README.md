@@ -61,6 +61,7 @@ Some of the Technologies involved in this project:
 * VsCode
 
 <div id="how-to-run"> </div>
+
 ### 🏃🏻‍♂️ How to run 
 
 #### Requirements
@@ -140,7 +141,10 @@ The React application will be mounted in your `http://localhost:3333`
 
 #### 📱Mobile:
 
+> This application was fully tested only on Android
+
 Finally, to run the mobile application, go to `~/mobile` and execute:
+
 
 ##### Android:
 ```bash
@@ -155,6 +159,8 @@ $ adb reverse tcp:3333 tcp:3333
 $ react-native run-android
 ```
 
+And if you are running via USB, don't forget to go into `~/config/ReactotronConfig.js` and insert your machine ip in .configure: `.configure({url: 'Your Machine IP'})`
+
 ##### iOS:
 
 **Only if you are using MacOS**
@@ -168,7 +174,7 @@ $ pod install
 
 $ cd ..
 
-# you can use the --simulator="iPhone 8" to run another version if you are in MacOS
+# you can use the --simulator="iPhone 11" to run another version of iPhone if you are in MacOS
 $ react-native run-ios
 ```
 
