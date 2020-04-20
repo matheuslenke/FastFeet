@@ -59,7 +59,7 @@ export default function OrderDetails({ navigation, route }) {
     if (order.currentStep === 3) {
       return 'Entregue';
     }
-  });
+  },[order]);
 
   const startDate = useMemo(() =>
     order.start_date ? formatDate(order.start_date) : '- - / - - / - -'

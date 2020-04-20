@@ -26,6 +26,8 @@
   <a href="#licence">Licence</a>
 </p>
 
+<img src="./images/Frontend.gif" style="height: 400px"  />
+<img src="./images/mobile.gif" style="height: 400px" />
 
 ## 👨🏻‍💻 Project
 
