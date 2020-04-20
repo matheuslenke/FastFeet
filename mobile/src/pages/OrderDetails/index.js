@@ -83,7 +83,8 @@ export default function OrderDetails({ navigation, route }) {
         navigation.navigate('ConfirmOrder', { order });
       }
     } catch (error) {
-      Alert.alert('Falha', 'Falha ao fazer requisição, tente novamente');
+      console.tron.log(error);
+      Alert.alert('Falha', `${error}`);
     }
   }
 

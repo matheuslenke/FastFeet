@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Alert } from 'react-native';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { RNCamera } from 'react-native-camera';
 
@@ -38,15 +39,21 @@ export default function ConfirmOrder({ navigation, route }) {
   const [loading, setLoading] = useState(false);
   const [cameraType, setCameraType] = useState(RNCamera.Constants.Type.back);
 
+  const profile = useSelector(state => state.user.profile);
+
   async function takePicture(camera) {
     const options = { quality: 0.5, base64: true };
     const data = await camera.takePictureAsync(options);
     //  eslint-disable-next-line
-    setPicture({
-      uri: data.uri,
-      type: 'image/jpeg',
-      originalname: `client_signature_delivery_id_${order.id}.jpg`,
-    });
+
+
+      setPicture({
+        uri:  data.uri,
+        type: 'image/jpeg',
+        originalname: `signature_${profile.id}_${order.id}.jpg`,
+      });
+    
+  
   }
 
   async function handleSubmitSignature() {
@@ -55,28 +62,33 @@ export default function ConfirmOrder({ navigation, route }) {
     const data = new FormData();
 
     data.append('file', {
-      url: picture.uri,
-      name: picture.name,
+      uri: picture.uri,
+      name: picture.originalname,
       type: picture.type,
     });
 
     try {
+      console.tron.log(data);
+
       const response = await api.post('files', data);
 
-      const { id: signature_id } = response.data;
+      const {id: signature_id } = response.data;
+
+
 
       if (response.status === 200) {
-        const finishResponse = await api.put(`deliveryman/${order.id}/finish`, {
+        const finishResponse = await api.put(`deliveryman/${profile.id}/deliveries/${order.id}/finish`, {
           signature_id,
         });
-
         if (finishResponse.status === 200) {
           Alert.alert('Sucesso!', 'Assinatura enviada com sucesso');
+          setLoading(false);
           navigation.navigate('Dashboard');
         }
       }
     } catch (error) {
       Alert.alert('Erro', 'Falha ao enviar assinatura, tente novamente');
+      setLoading(false);
     }
   }
 
@@ -96,7 +108,7 @@ export default function ConfirmOrder({ navigation, route }) {
         <Card>
           {picture ? (
             <>
-              <Preview source={{ uri: picture.url }} />
+              <Preview source={{ uri: picture.uri }} />
               <CloseButton onPress={handleCancel}>
                 <Icon name="close" size={30} color="#fff" />
               </CloseButton>
@@ -146,7 +158,7 @@ export default function ConfirmOrder({ navigation, route }) {
             </RNCamera>
           )}
         </Card>
-        <SubmitButton onPress={handleSubmitSignature}>
+        <SubmitButton enabled={!!picture}  onPress={handleSubmitSignature} loading={loading}>
           <Text>Enviar</Text>
         </SubmitButton>
       </Content>

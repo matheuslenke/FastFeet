@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import OrderItem from '~/components/OrderItem';
 
-import { OrderContainer, Container, OrdersList } from '../styles';
+import { OrderContainer, Container, OrdersList } from './styles';
 
 import api from '~/services/api';
 import formatDate from '~/utils/formatDate';

@@ -49,7 +49,6 @@ export const WelcomeInfo = styled.Text`
 export const OrdersDiv = styled.View`
   flex: 1;
   margin: 20px 0;
-  padding: 0px;
   width: 100%;
 `;
 
@@ -81,10 +80,4 @@ export const FilterText = styled.Text`
   font-weight: ${props => (props.active ? 'bold' : 'normal')};
 `;
 
-export const OrdersList = styled.FlatList.attrs({
-  showsVerticalScrollIndicator: false,
-})``;
 
-export const OrderContainer = styled.View`
-  margin: 10px 0;
-`;

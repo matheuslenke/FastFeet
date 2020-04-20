@@ -69,7 +69,6 @@ export const Preview = styled.Image`
   flex: 10;
   width: 100%;
   height: 100%;
-  border: dashed;
   align-items: center;
   justify-content: flex-end;
 `;

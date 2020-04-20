@@ -40,6 +40,8 @@ routes.put(
   FinishDeliveryController.update
 );
 
+routes.post('/files', upload.single('file'), FileController.store);
+
 // Delivery Problems routes
 routes.get('/delivery/:delivery_id/problems', DeliveryProblemController.show);
 routes.post('/delivery/:delivery_id/problems', DeliveryProblemController.store);
@@ -54,7 +56,7 @@ routes.get('/recipients', RecipientController.index);
 routes.put('/recipients/:id', RecipientController.update);
 routes.delete('/recipients/:id', RecipientController.delete);
 
-routes.post('/files', upload.single('file'), FileController.store);
+
 
 // Deliveryman Routes
 routes.post('/deliverymans', DeliverymanController.store);
