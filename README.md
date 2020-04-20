@@ -197,8 +197,8 @@ This project was developed for studying purposes and its the final challenge of 
 
 ### 📝 Licence
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
+This project is under MIT License. See the file [LICENSE](LICENSE.md) for more details.
 
 ---
 
-Feito com :purple_heart: by Matheus Lenke
+Made with :purple_heart: by Matheus Lenke
