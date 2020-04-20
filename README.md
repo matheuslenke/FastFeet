@@ -110,7 +110,7 @@ After that, you can go to `~/backend` and execute:
 $ yarn
 
 # Script to start the development server
-$ yarn dev
+$ yarn dev && yarn queue
 ```
 You can also use another port for your server going to ~/backend/src/server.js and changing the port inside `app.listen(PORT)`
 
