@@ -154,9 +154,11 @@ $ yarn
 
 # In case you are using an android Emulator, to Reactotron works
 $ adb reverse tcp:9090 tcp:9090 
+$ adb reverse tcp:3333 tcp:3333
 
 # To android run via USB
-$ adb reverse tcp:3333 tcp:3333
+$ adb reverse tcp:8081 tcp:8081
+
 
 $ react-native run-android
 ```
